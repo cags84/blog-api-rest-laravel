@@ -21,31 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
-Route::get('/articles', function() {
-    return Article::all();
-});
-
-Route::get('/articles/{id}', function($id) {
-    return Article::find($id);
-});
-
-Route::post('/articles', function(Request $request) {
-    $article = Article::create($request->all());
-
-    return response()->json([
-        "Article created successfully {$article->id}"
-    ], 201);
-});
-
-Route::put('/articles/{id}', function(Request $request, $id) {
-    $article = Article::findOrFail($id);
-    $article->update($request->all());
-
-    return $article;
-});
-
-Route::delete('/articles/{id}', function($id) {
-    Article::find($id)->delete();
-
-    return 204;
-});
+Route::get('/articles', 'ArticleController@index');
+Route::get('/articles/{article}', 'ArticleController@show');
+Route::post('/articles', 'ArticleController@store');
+Route::put('/articles/{article}', 'ArticleController@update');
+Route::delete('/articles/{article}', 'ArticleController@destroy');
